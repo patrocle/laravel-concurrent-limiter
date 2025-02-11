@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Patrocle\LaravelConcurrentLimiter;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use Patrocle\LaravelConcurrentLimiter\Commands\LaravelConcurrentLimiterCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class LaravelConcurrentLimiterServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,10 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('laravel-concurrent-limiter')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_migration_table_name_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasMigration('create_laravel_concurrent_limiter_table')
+            ->hasCommand(LaravelConcurrentLimiterCommand::class);
     }
 }

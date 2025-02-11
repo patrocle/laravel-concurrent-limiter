@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Database\Factories;
+namespace Patrocle\LaravelConcurrentLimiter\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

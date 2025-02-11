@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "patrocle/laravel-concurrent-limiter",
+    "description": "LaravelConcurrentLimiter is a lightweight Laravel middleware that limits concurrent requests per user (or IP). It delays requests until a slot is available or returns an error after a maximum wait time, protecting your app from resource exhaustion and ensuring fair usage under high load.",
     "keywords": [
-        ":vendor_name",
+        "Patrocle",
         "laravel",
-        ":package_slug"
+        "laravel-concurrent-limiter"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/patrocle/laravel-concurrent-limiter",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Louis",
+            "email": "louis@larger.io",
             "role": "Developer"
         }
     ],
@@ -35,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Patrocle\\LaravelConcurrentLimiter\\": "src/",
+            "Patrocle\\LaravelConcurrentLimiter\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Patrocle\\LaravelConcurrentLimiter\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -63,10 +63,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Patrocle\\LaravelConcurrentLimiter\\LaravelConcurrentLimiterServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "LaravelConcurrentLimiter": "Patrocle\\LaravelConcurrentLimiter\\Facades\\LaravelConcurrentLimiter"
             }
         }
     },

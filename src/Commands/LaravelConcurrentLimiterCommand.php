@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Patrocle\LaravelConcurrentLimiter\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelConcurrentLimiterCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-concurrent-limiter';
 
     public $description = 'My command';
 

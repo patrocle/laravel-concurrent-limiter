@@ -1,84 +1,72 @@
-# LaravelConcurrentLimiter is a lightweight Laravel middleware that limits concurrent requests per user (or IP). It delays requests until a slot is available or returns an error after a maximum wait time, protecting your app from resource exhaustion and ensuring fair usage under high load.
+Below is an example README.md for your package:
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/patrocle/laravel-concurrent-limiter.svg?style=flat-square)](https://packagist.org/packages/patrocle/laravel-concurrent-limiter)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/patrocle/laravel-concurrent-limiter/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/patrocle/laravel-concurrent-limiter/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/patrocle/laravel-concurrent-limiter/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/patrocle/laravel-concurrent-limiter/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/patrocle/laravel-concurrent-limiter.svg?style=flat-square)](https://packagist.org/packages/patrocle/laravel-concurrent-limiter)
+---
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+# Laravel Concurrent Limiter
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-concurrent-limiter.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-concurrent-limiter)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+**Laravel Concurrent Limiter** is a Laravel middleware package that limits the number of concurrent requests per user (or IP when unauthenticated). It delays incoming requests until a slot is free or returns a 503 error if the wait exceeds a defined maximum time.
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
 
 ```bash
 composer require patrocle/laravel-concurrent-limiter
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-concurrent-limiter-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="laravel-concurrent-limiter-config"
-```
-
-This is the contents of the published config file:
+If your Laravel version does not auto-discover the service provider, add it to your `config/app.php` providers array:
 
 ```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-concurrent-limiter-views"
+Patrocle\LaravelConcurrentLimiter\LaravelConcurrentLimiterServiceProvider::class,
 ```
 
 ## Usage
 
+Apply the middleware to your routes using the alias `concurrent.limit`. The middleware accepts three parameters:
+- **maxParallel**: Maximum concurrent requests allowed.
+- **maxWaitTime**: Maximum time (in seconds) to wait for a slot.
+- **prefix**: An optional string to prefix the cache key.
+
+For example, to allow a maximum of 10 parallel requests per user (or IP) and wait up to 30 seconds for a slot:
+
 ```php
-$laravelConcurrentLimiter = new Patrocle\LaravelConcurrentLimiter();
-echo $laravelConcurrentLimiter->echoPhrase('Hello, Patrocle!');
+use Illuminate\Support\Facades\Route;
+
+Route::middleware('concurrent.limit:10,30,api')->group(function () {
+    Route::get('/data', [\App\Http\Controllers\DataController::class, 'index']);
+});
 ```
 
-## Testing
+You can also use the static helper to generate the middleware definition:
+
+```php
+LaravelConcurrentLimiter::with(10, 30, 'api');
+```
+
+## How It Works
+
+When a request enters the middleware, it:
+- Generates a unique key based on the authenticated user ID or the request IP.
+- Increments a counter in the cache.
+- If the counter exceeds the maximum allowed, it waits (checking every 100ms) until a slot is free or the maximum wait time is reached.
+- If the wait time is exceeded, it returns a 503 error with a JSON message.
+
+After processing, the counter is decremented.
+
+## Configuration
+
+The package provides a config file that you can publish:
 
 ```bash
-composer test
+php artisan vendor:publish --provider="Patrocle\LaravelConcurrentLimiter\LaravelConcurrentLimiterServiceProvider" --tag="config"
 ```
 
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [Louis](https://github.com/Patrocle)
-- [All Contributors](../../contributors)
+Feel free to customize the default settings.
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+This package is open-sourced software licensed under the [MIT license](LICENSE).
+
+---
+
+Happy limiting!

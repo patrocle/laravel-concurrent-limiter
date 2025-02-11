@@ -35,8 +35,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Patrocle\\LaravelConcurrentLimiter\\": "src/",
-            "Patrocle\\LaravelConcurrentLimiter\\Database\\Factories\\": "database/factories/"
+            "Patrocle\\LaravelConcurrentLimiter\\": "src/"
         }
     },
     "autoload-dev": {

@@ -1,7 +1,3 @@
-Below is an example README.md for your package:
-
----
-
 # Laravel Concurrent Limiter
 
 **Laravel Concurrent Limiter** is a Laravel middleware package that limits the number of concurrent requests per user (or IP when unauthenticated). It delays incoming requests until a slot is free or returns a 503 error if the wait exceeds a defined maximum time.

@@ -2,9 +2,9 @@
 
 namespace Patrocle\LaravelConcurrentLimiter;
 
+use Patrocle\LaravelConcurrentLimiter\Commands\LaravelConcurrentLimiterCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Patrocle\LaravelConcurrentLimiter\Commands\LaravelConcurrentLimiterCommand;
 
 class LaravelConcurrentLimiterServiceProvider extends PackageServiceProvider
 {
